@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "React/RCTBridgeModule.h"
+#import "React/RCTEventEmitter.h"
 //#import "RCTBridgeModule.h" wrong
 @interface RnOcModule : NSObject<RCTBridgeModule>
+
+@end
+@interface RCTBridge (RCTEventEmitter)
+
+- (RCTEventEmitter *)eventEmitter;
 
 @end

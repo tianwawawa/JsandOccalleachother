@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   Text,
   View,
-  NativeModules
+  NativeModules,
+  NativeAppEventEmitter
 } from 'react-native';
 const RnOcModule = NativeModules.RnOcModule
 
@@ -24,14 +25,32 @@ export default class AwesomeProject extends Component {
     this.callback = this.callback.bind(this)
   }
 
-    componentWillMount() {
+    componentDidMount() {
+        // this.subscription = NativeAppEventEmitter.addListener(
+        //     'typeChange',
+        //     (result)  => alert(result.type)
+        // );
+
+
+        this.subscription = NativeAppEventEmitter.addListener(
+            'ocCallJs',
+            (result)=>{
+              alert('4444eeee')
+            }
+        );
+        // alert(this.subscription)
     }
-    
+
+    componentWillUnmount() {
+        this.subscription.remove();
+    }
+
   //js调用oc  callback函数连个参数 NSNumber 和 你要返回的东西
   callback(){
-    RnOcModule.JScallOc('hello',(num,result)=>{
-      alert(result)
-    })
+    // RnOcModule.JScallOc('hello',(num,result)=>{
+    //   alert(result)
+    // })
+      RnOcModule.OcCallJs()
   }
   render() {
     return (

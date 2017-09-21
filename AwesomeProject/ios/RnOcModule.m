@@ -7,6 +7,7 @@
 //
 
 #import "RnOcModule.h"
+#import "React/RCTBridge.h"
 #import "React/RCTEventDispatcher.h"
 @implementation RnOcModule
 @synthesize bridge = _bridge;
@@ -14,7 +15,8 @@
 RCT_EXPORT_MODULE()
 //OC调用js
 RCT_EXPORT_METHOD(OcCallJs) {
-  [self OcCallJs];
+//  NSLog(@"KAAAAAAA'WOEIFsdlifjo代发借款分类考试的减肥");
+  [self ocCallJs];
 }
 //js调用原生的方法
 RCT_EXPORT_METHOD(JScallOc:(NSString *)first withAnoter:(RCTResponseSenderBlock)callback){
@@ -23,8 +25,23 @@ RCT_EXPORT_METHOD(JScallOc:(NSString *)first withAnoter:(RCTResponseSenderBlock)
   NSNumber *num = [[NSNumber alloc] initWithInt:666];
   callback(@[num,events]);
 }
+- (void)changeType:(NSString *)type {
+  NSLog(@"555555555555555555555555");
+    [self.bridge.eventDispatcher sendAppEventWithName:@"changeType" body:@{@"type" : @"222"}];
+  
+}
 - (void)ocCallJs{
   NSString *str = @"connection";
   [self.bridge.eventDispatcher sendAppEventWithName:@"ocCallJs" body:str];
 }
+
 @end
+
+@implementation RCTBridge (RCTEventEmitter)
+
+- (RCTEventEmitter *)eventEmitter
+{
+  return [self moduleForClass:[RCTEventEmitter class]];
+}
+@end
+
