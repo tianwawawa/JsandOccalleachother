@@ -8,25 +8,40 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  TouchableOpacity,
   Text,
-  View
+  View,
+  NativeModules
 } from 'react-native';
+const RnOcModule = NativeModules.RnOcModule
 
 export default class AwesomeProject extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+
+    }
+    this.callback = this.callback.bind(this)
+  }
+
+    componentWillMount() {
+    }
+    
+  //js调用oc  callback函数连个参数 NSNumber 和 你要返回的东西
+  callback(){
+    RnOcModule.JScallOc('hello',(num,result)=>{
+      alert(result)
+    })
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+        <View style={styles.container}>
+          <TouchableOpacity  onPress={this.callback}>
+            <Text style={styles.welcome}>
+              js 调用原生代码
+             </Text>
+           </TouchableOpacity>
+        </View>
     );
   }
 }
